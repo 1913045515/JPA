@@ -3,15 +3,14 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 /**
  * Created by qiang on 2018/1/22.
  */
 
 @Entity
-@Table(name="user")
-public class User implements Serializable {
+@Table(name="goods_detail")
+public class GoodsDetail implements Serializable {
     @Id
     @GenericGenerator(name = "PKUUID", strategy = "uuid2")
     @GeneratedValue(generator = "PKUUID")
@@ -24,19 +23,11 @@ public class User implements Serializable {
     @Column(name = "name", nullable = true, length = 30)
     private String name;
 
-    /**
-     * 身高
-     */
-    @Column(name = "height", nullable = true, length = 10)
-    private Integer height;
+    @OneToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="goods_id")
+    private Goods goods;
 
-    /**
-     * 用户所创建的地址信息
-     */
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
-    private List<Address> addresses;
-
-    public User() {
+    public GoodsDetail() {
     }
 
     public String getId() {
@@ -55,19 +46,11 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public Integer getHeight() {
-        return height;
+    public Goods getGoods() {
+        return goods;
     }
 
-    public void setHeight(Integer height) {
-        this.height = height;
-    }
-
-    public List<Address> getAddresses() {
-        return addresses;
-    }
-
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
+    public void setGoods(Goods goods) {
+        this.goods = goods;
     }
 }

@@ -10,8 +10,8 @@ import java.util.List;
  */
 
 @Entity
-@Table(name="user")
-public class User implements Serializable {
+@Table(name="address")
+public class Address implements Serializable {
     @Id
     @GenericGenerator(name = "PKUUID", strategy = "uuid2")
     @GeneratedValue(generator = "PKUUID")
@@ -25,18 +25,19 @@ public class User implements Serializable {
     private String name;
 
     /**
-     * 身高
+     * 地址详情信息
      */
-    @Column(name = "height", nullable = true, length = 10)
-    private Integer height;
+    @Column(name = "detail", nullable = true, length = 100)
+    private String detail;
 
     /**
-     * 用户所创建的地址信息
+     * 地址所创建者的用户信息
      */
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "user")
-    private List<Address> addresses;
+    @ManyToOne
+    @JoinColumn(name = "user_id",foreignKey = @ForeignKey(name = "fk_user_id"))
+    private User user;
 
-    public User() {
+    public Address() {
     }
 
     public String getId() {
@@ -55,19 +56,19 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public Integer getHeight() {
-        return height;
+    public String getDetail() {
+        return detail;
     }
 
-    public void setHeight(Integer height) {
-        this.height = height;
+    public void setDetail(String detail) {
+        this.detail = detail;
     }
 
-    public List<Address> getAddresses() {
-        return addresses;
+    public User getUser() {
+        return user;
     }
 
-    public void setAddresses(List<Address> addresses) {
-        this.addresses = addresses;
+    public void setUser(User user) {
+        this.user = user;
     }
 }
