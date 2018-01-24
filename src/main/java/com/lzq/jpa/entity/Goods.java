@@ -1,4 +1,6 @@
 package com.lzq.jpa.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -10,6 +12,7 @@ import java.util.List;
  * Created by qiang on 2018/1/22.
  */
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name="goods")
 public class Goods implements Serializable {
@@ -33,6 +36,7 @@ public class Goods implements Serializable {
             ,foreignKey = @ForeignKey(name = "fk_mr_links_classify_goods"))
     private List<Classify> classifies= new ArrayList<>();
 
+    @JsonIgnore
     @OneToOne(fetch = FetchType.LAZY,mappedBy="goods")
     private GoodsDetail goodsDetail;
 

@@ -26,9 +26,6 @@ public class GoodsController {
     public List<Classify> findByClassify(){
         Goods goods=goodsRepository.getOne("1");
         List<Classify> list=goods.getClassifies();
-        for(Classify classify:list){
-            classify.setGoodses(null);
-        }
         return list;
     }
 
@@ -36,6 +33,7 @@ public class GoodsController {
     @ResponseBody
     public GoodsDetail findByGoodsDetail(){
         Goods goods=goodsRepository.getOne("1");
-        return goods.getGoodsDetail();
+        GoodsDetail goodsDetail=goods.getGoodsDetail();
+        return goodsDetail;
     }
 }

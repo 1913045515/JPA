@@ -2,6 +2,7 @@ package com.lzq.jpa.controller;
 
 import com.lzq.jpa.entity.Address;
 import com.lzq.jpa.entity.User;
+import com.lzq.jpa.entity.repository.AddressRepository;
 import com.lzq.jpa.entity.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,14 +23,21 @@ public class AddressController {
     @Autowired
     private UserRepository userRepository;
 
-    @RequestMapping(value = "findByAddress",method = RequestMethod.GET)
+    @Autowired
+    private AddressRepository addressRepository;
+
+    @RequestMapping(value = "getAddress",method = RequestMethod.GET)
     @ResponseBody
-    public List<Address> findByAddress(){
-        User user=userRepository.getOne("5");
+    public List<Address> getAddress(){
+        User user=userRepository.getOne("1");
         List<Address> list=user.getAddresses();
-        for(Address address:list){
-            address.setUser(null);
-        }
         return list;
+    }
+
+    @RequestMapping(value = "getUser",method = RequestMethod.GET)
+    @ResponseBody
+    public User getUser(){
+        Address address=addressRepository.getOne("1");
+        return address.getUser();
     }
 }

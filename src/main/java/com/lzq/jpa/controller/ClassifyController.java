@@ -27,9 +27,6 @@ public class ClassifyController {
     public List<Goods> findByGoods(){
         Classify classify=classifyRepository.getOne("1");
         List<Goods> list=classify.getGoodses();
-        for(Goods goods:list){
-            goods.setClassifies(null);
-        }
         return list;
     }
 }

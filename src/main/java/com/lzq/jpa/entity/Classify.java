@@ -1,5 +1,7 @@
 package com.lzq.jpa.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -11,6 +13,7 @@ import java.util.List;
  * Created by qiang on 2018/1/22.
  */
 
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Entity
 @Table(name="classify")
 public class Classify implements Serializable {
@@ -26,6 +29,7 @@ public class Classify implements Serializable {
     @Column(name = "name", nullable = true, length = 30)
     private String name;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.MERGE)
     @JoinTable(name = "goods_classify_links",
             joinColumns= { @JoinColumn(name = "goods_id", referencedColumnName = "id") }
